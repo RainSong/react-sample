@@ -14,18 +14,36 @@ var Grid = React.createClass({
             totalPage: 0,
             currentPage: 1,
             sortColumnName: '',
-            sortOrder: ''
+            sortOrder: '',
+            enable: 0,
+            keyWord: ''
         }
     },
     componentDidMount: function () {
         this.populateData();
+        if (this.props.signal && !this.props.signal.has(this.refreshGridHandle)) {
+            this.props.signal.add(this.refreshGridHandle);
+        }
+    },
+    componentWillUnmount: function () {
+        if (this.props.signal && this.props.signal.has(this.refreshGridHandle)) {
+            this.props.signal.add(this.refreshGridHandle);
+        }
     },
     /* function for populate data */
-    populateData: function () {
-        var params = {
-            pageSize: this.props.pageSize,
-            currentPage: this.state.currentPage,
-            _token: _globalObj._token
+    populateData: function (params) {
+        if (arguments.length > 0) {
+            console.log(arguments[0]);
+            params['pageSize'] = this.props.pageSize;
+            params['currentPage'] = this.state.currentPage;
+            params['_token'] = _globalObj._token;
+        }
+        else {
+            params = {
+                pageSize: this.props.pageSize,
+                currentPage: this.state.currentPage,
+                _token: _globalObj._token
+            };
         }
         if (this.state.sortColumnName) {
             params.sortColumnName = this.state.sortColumnName;
@@ -38,9 +56,6 @@ var Grid = React.createClass({
             url: this.props.options.dataUrl,
             type: 'POST',
             data: params,
-            // headers: {
-            //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            // },
             success: function (data) {
                 if (this.isMounted()) {
                     this.setState(data);
@@ -51,15 +66,18 @@ var Grid = React.createClass({
             }.bind(this)
         });
     },
+    refreshGridHandle: function (params) {
+        this.populateData(params);
+    },
     /* function for pagination */
     pageChanged: function (pageNumber, e) {
         e.preventDefault();
         this.state.currentPage = pageNumber;
         this.populateData();
+        return false;
     },
     /* function for sorting */
     sortChanged: function (sortColumnName, order, e) {
-        debugger
         e.preventDefault();
         this.state.sortColumnName = sortColumnName;
         this.state.currentPage = 1;
@@ -77,7 +95,7 @@ var Grid = React.createClass({
 
             <div className="row">
                 <div className="col-sm-12">
-                    <table className="table table-striped table-bordered dataTable no-footer">
+                    <table className="table table-striped table-bordered table-hover dataTable no-footer">
                         <GridHeader key={ 0 }
                                     columns={ this.props.options.columns }
                                     sortColumnName={this.state.sortColumnName }
@@ -101,7 +119,7 @@ var Grid = React.createClass({
                    pageCount={ this.state.totalPage }
                    currentPage={ this.state.currentPage }
                    pageSize={ this.props.options.pageSize }
-                   onChanged={ this.state.pageChanged }/>
+                   onChanged={ this.pageChanged }/>
 
         </div>);
     }

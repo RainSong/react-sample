@@ -3,7 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>@yield('title')</title>
+    <title>
+        @section('title')
+        @show
+    </title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"/>
@@ -59,14 +62,18 @@
     <div class="control-sidebar-bg"></div>
 
 </div>
-
+<script type="text/javascript">
+    var _globalObj = {
+        "_token": "{{ csrf_token() }}"
+    };
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.5/js/app.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react-dom.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
-<script type="text/babel" src="/static/scripts/leftnav.jsx"></script>
+<script type="text/javascript" src="/static/scripts/build/leftnav.js"></script>
 {{-- <script type="text/javascript">
 function setMenuActive(parentMenu,childMenu){
     $('.sidebar-menu .active').removeClass('active');
@@ -74,12 +81,6 @@ function setMenuActive(parentMenu,childMenu){
     $('#'+childMenu).addClass('active');
 }
 </script> --}}
-
-<script type="text/javascript">
-    var _globalObj = {
-        "_token": "{{ csrf_token() }}"
-    };
-</script>
 @section('foot')
 @show
 </body>

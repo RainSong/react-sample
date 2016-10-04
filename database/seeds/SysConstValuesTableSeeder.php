@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Util;
 
-class SysConstValue extends Seeder
+class SysConstValuesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -34,6 +34,14 @@ class SysConstValue extends Seeder
         } catch (Exception $ex) {
             throw new Exception('get module type group id fail', $ex->getCode(), $ex);
         }
+        $const_group_id_parameter_type = 0;
+        try {
+            $const_group_id_parameter_type = $this->get_const_group_id(Util\ConstValue::CONST_VALUE_GROUP_CODE_PARAMETER_TYPE);
+        } catch (Exception $ex) {
+            throw new Exception('get parameter type group id fail', $ex->getCode(), $ex);
+        }
+
+        $sort = 1;
         $models =
             [
                 //const value type
@@ -43,7 +51,7 @@ class SysConstValue extends Seeder
                     'code' => 'text',
                     'value' => '1',
                     'value_type' => 2,
-                    'sort' => 1
+                    'sort' => $sort++
                 ],
                 [
                     'group_id' => $const_group_id_const_value_type,
@@ -51,7 +59,7 @@ class SysConstValue extends Seeder
                     'code' => 'int',
                     'value' => '2',
                     'value_type' => 2,
-                    'sort' => 2
+                    'sort' => $sort++
                 ],
                 [
                     'group_id' => $const_group_id_const_value_type,
@@ -59,7 +67,7 @@ class SysConstValue extends Seeder
                     'code' => 'float',
                     'value' => '3',
                     'value_type' => 2,
-                    'sort' => 3
+                    'sort' => $sort++
                 ],
                 [
                     'group_id' => $const_group_id_const_value_type,
@@ -67,7 +75,7 @@ class SysConstValue extends Seeder
                     'code' => 'decimal',
                     'value' => '4',
                     'value_type' => 2,
-                    'sort' => 4
+                    'sort' => $sort++
                 ],
                 [
                     'group_id' => $const_group_id_const_value_type,
@@ -75,7 +83,7 @@ class SysConstValue extends Seeder
                     'code' => 'date',
                     'value' => '5',
                     'value_type' => 2,
-                    'sort' => 5
+                    'sort' => $sort++
                 ],
                 [
                     'group_id' => $const_group_id_const_value_type,
@@ -83,7 +91,7 @@ class SysConstValue extends Seeder
                     'code' => 'time',
                     'value' => '6',
                     'value_type' => 2,
-                    'sort' => 6
+                    'sort' => $sort++
                 ],
                 [
                     'group_id' => $const_group_id_const_value_type,
@@ -91,7 +99,7 @@ class SysConstValue extends Seeder
                     'code' => 'datetime',
                     'value' => '7',
                     'value_type' => 2,
-                    'sort' => 7
+                    'sort' => $sort++
                 ],
                 //module type
                 [
@@ -100,7 +108,7 @@ class SysConstValue extends Seeder
                     'code' => 'module_group',
                     'value' => '1',
                     'value_type' => 1,
-                    'sort' => 8
+                    'sort' => $sort++
                 ],
                 [
                     'group_id' => $const_group_id_module_type,
@@ -108,7 +116,7 @@ class SysConstValue extends Seeder
                     'code' => 'module_list',
                     'value' => '2',
                     'value_type' => 1,
-                    'sort' => 9
+                    'sort' => $sort++
                 ],
                 [
                     'group_id' => $const_group_id_module_type,
@@ -116,7 +124,7 @@ class SysConstValue extends Seeder
                     'code' => 'module_addedit',
                     'value' => '3',
                     'value_type' => 1,
-                    'sort' => 10
+                    'sort' => $sort++
                 ],
                 [
                     'group_id' => $const_group_id_module_type,
@@ -124,7 +132,7 @@ class SysConstValue extends Seeder
                     'code' => 'module_view',
                     'value' => '4',
                     'value_type' => 1,
-                    'sort' => 11
+                    'sort' => $sort++
                 ]
             ];
 

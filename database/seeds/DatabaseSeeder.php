@@ -11,8 +11,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(SysConstValueGroup::class);
-        $this->call(SysConstValue::class);
+        $this->call(SysConstValueGroupsTableSeeder::class);
+        $this->call(SysConstValuesTableSeeder::class);
 
         $this->call(SysModulesTableSeeder::class);
     }

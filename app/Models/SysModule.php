@@ -1,9 +1,20 @@
 <?php
 
-namespace App\Models\Admin;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property bool is_system
+ * @property bool enable
+ * @property string name
+ * @property string code
+ * @property int sort
+ * @property int type
+ * @property string url
+ * @property int parent_id
+ * @property mixed id
+ */
 class SysModule extends Model
 {
     //

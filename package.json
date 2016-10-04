@@ -31,6 +31,7 @@
   },
   "homepage": "https://github.com/RainSong/react-sample#readme",
   "dependencies": {
-    "react": "^15.3.1"
+    "react": "^15.3.1",
+    "signals": "^1.0.0"
   }
 }

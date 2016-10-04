@@ -22,7 +22,8 @@ class ConstValueDataService{
         $sql = 'SELECT
                   cv.id,
                   cv.name,
-                  cv.code
+                  cv.code,
+                  cv.value
                 FROM
                   `sys_const_values` AS cv
                 LEFT JOIN

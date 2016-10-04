@@ -11,7 +11,6 @@ var Pager = React.createClass({
         var total = this.props.total;
         var currentPageStartIndex = 0;
         var currentPageEndIndex = 0;
-
         if (total != 0) {
             currentPageStartIndex = (this.props.currentPage - 1) * this.props.pageSize + 1;
             currentPageEndIndex = currentPageStartIndex + this.props.pageSize;
@@ -19,7 +18,6 @@ var Pager = React.createClass({
                 currentPageEndIndex = total;
             }
         }
-
         /* previous page button  */
         // current page is the first page ，disable previous page button
         if (currentPage == 1) {
@@ -162,6 +160,7 @@ var Pager = React.createClass({
                                    onPageChanged={ this.props.onChanged }
                                    targetPageIndex={ currentPage + 1 }/>);
         }
+
         return (<div className="row">
             <div className="col-sm-5">
                 <div className="dataTables_info"

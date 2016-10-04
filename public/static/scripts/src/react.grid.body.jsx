@@ -20,8 +20,14 @@ var GridBody = React.createClass({
             </tr>);
         }
         else {
+            var index = 0;
             data.forEach(function (rowData) {
-                rows.push(<GridRow key={ rowData[keyColumn] } rowData={rowData} columns={ columns }/>);
+                rows.push(<GridRow key={ rowData[keyColumn] }
+                                   keyColumn = { keyColumn }
+                                   rowIndex={ index }
+                                   rowData={rowData}
+                                   columns={ columns }/>);
+                index++;
             });
         }
         return (<tbody>{ rows }</tbody>);

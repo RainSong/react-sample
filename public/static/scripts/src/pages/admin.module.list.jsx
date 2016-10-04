@@ -4,6 +4,42 @@ var React = require('react');
 var QueryControls = require('../react.grid.query.jsx');
 var QueryActions = require('../react.grid.actions.jsx');
 var Grid = require('../react.grid.jsx');
+var Signal = require('signals');
+
+var gridSignal = new Signal.Signal();
+
+function getGridSelectIds() {
+    var ids = [];
+    var selectRow = $('.dataTable tbody tr.selected');
+    if (selectRow.length == 0)return ids;
+    for (var i = 0, j = selectRow.length; i < j; i++) {
+        ids.push($(selectRow[i]).attr('data-id'));
+    }
+    return ids;
+}
+
+function editActionHandle(url) {
+    var selectIds = getGridSelectIds();
+    if (!selectIds || selectIds.length == 0) {
+        alert('请选择要修改的数据！');
+    } else if (selectIds.length > 1) {
+        alert('一次只能修改一条数据！');
+    }
+    else {
+        url = url.replace('{id}', selectIds[0]);
+        window.location.href = url;
+    }
+}
+
+function refreshGrid() {
+    var keyWord = $('#txtName').val();
+    var enable = $('#selectStatus option:selected').val();
+    var paras = {
+        keyWord: keyWord,
+        enable: enable
+    }
+    gridSignal.dispatch(paras);
+}
 
 var gridQueryOptions = [
     {
@@ -20,6 +56,10 @@ var gridQueryOptions = [
         title: '模块状态',
         controlType: 'select',
         field: 'status',
+        nullable: true,
+        textField: 'text',
+        valueField: 'value',
+        value: 0,
         data: [
             {id: 'item-1', text: '已删除', value: 1},
             {id: 'item-2', text: '未删除', value: 0}
@@ -32,7 +72,8 @@ var gridActionOptions = [
         id: 'ac-01',
         title: '查询',
         actionType: 'add',
-        actionUrl: '/module/module/add'
+        actionUrl: '/module/module/add',
+        actionHandle: refreshGrid
     },
     {
         id: 'ac-02',
@@ -44,7 +85,8 @@ var gridActionOptions = [
         id: 'ac-03',
         title: '修改',
         actionType: 'edit',
-        actionUrl: '/module/module/add'
+        actionUrl: '/admin/module/edit/{id}',
+        actionHandle: editActionHandle
     },
     {
         id: 'ac-04',
@@ -138,6 +180,7 @@ ReactDOM.render(<QueryControls data={ gridQueryOptions }/>,
 ReactDOM.render(<QueryActions data={ gridActionOptions }/>,
     document.getElementById('box-list-action'));
 
-ReactDOM.render(<Grid options={ gridOptions }/>,
+ReactDOM.render(<Grid options={ gridOptions }
+                      signal={ gridSignal }/>,
     document.getElementById('grid'));
 

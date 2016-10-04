@@ -1,6 +1,8 @@
 @extends('layouts.admin')
-
-@section('title','模块管理')
+@if($title==null)
+    {{ $title = '' }}
+@endif
+@section('title',$title)
 
 @section('header')
     <link rel="stylesheet"
@@ -35,5 +37,5 @@
 @endsection
 
 @section('foot')
-    <script type="text/javascript" src="/static/scripts/build/pages/admin.module.list.js"></script>
+    <script type="text/javascript" src="/static/scripts/build/pages/admin.datasource.list.js"></script>
 @endsection

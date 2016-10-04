@@ -30,5 +30,22 @@
 
 
 @section('foot')
+    <script type="text/javascript">
+       var data = null;
+        @if($module!=null)
+                data =
+        {
+            'id': {{ $module->id}},
+            'name': '{{ $module->name}}',
+            'code': '{{ $module->code}}',
+            'url': '{{ $module->url}}',
+            'type': {{ $module->type}},
+            'parent': {{ $module->parent_id}},
+            'sort': {{ $module->sort}}
+        };
+        @else
+            data = {};
+        @endif
+    </script>
     <script type="text/javascript" src="/static/scripts/build/pages/admin.module.addedit.js"></script>
 @endsection

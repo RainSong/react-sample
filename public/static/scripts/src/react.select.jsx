@@ -12,16 +12,16 @@ var Select = React.createClass({
         this.populateData();
     },
     checkError: function (e) {
-        if (!this.props.options.nullable && (!e.target.value || !e.target.value.length)) {
+        if (this.props.showError && !this.props.options.nullable && (!e.target.value || !e.target.value.length)) {
             this.props.showError(e, true, '请选择' + this.props.options.title);
-        }
-        else {
-            this.props.showError(e, false, '');
         }
     },
     /* function for populate data */
     populateData: function () {
-        if (!this.props.options.data && this.props.options.dataUrl) {
+        if (this.props.options.data && this.props.options.data.length) {
+            this.setState({data: this.props.options.data});
+        }
+        else if (this.props.options.dataUrl) {
             $.ajax({
                 url: this.props.options.dataUrl,
                 type: 'POST',
@@ -43,24 +43,24 @@ var Select = React.createClass({
         var items = [];
         var index = 0;
         data.forEach(function (item) {
-            var text = item[textField];
-            var value = item[valueField];
-            if (!value) {
-                value = '';
+            var itemText = item[textField];
+            var itemValue = item[valueField];
+            if (!itemValue) {
+                itemValue = '';
             }
-            if (item["selected"]) {
-                items.push(<option key={ index }
-                                   value={ value }
-                                   selected="selected">
-                    { text }
-                </option>);
-            }
-            else {
-                items.push(<option key={ index }
-                                   value={ value }>
-                    { text }
-                </option>);
-            }
+            // if (item["selected"] || itemValue == defaultValue) {
+            //     items.push(<option key={ index }
+            //                        value={ itemValue }
+            //                        selected="selected">
+            //         { itemText }
+            //     </option>);
+            // }
+            // else {
+            items.push(<option key={ index }
+                               value={ itemValue }>
+                { itemText }
+            </option>);
+            //}
             index++;
         });
         return items;
@@ -74,12 +74,16 @@ var Select = React.createClass({
         else if (this.state.data) {
             data = this.state.data;
         }
-        selectItems = this.buildItems(data, this.props.options.textField, this.props.options.valueField);
+        selectItems = this.buildItems(data,
+            this.props.options.textField,
+            this.props.options.valueField);
+
         return (<select className="form-control"
                         id={ this.props.options.controlId }
                         data-field={ this.props.options.field }
                         onBlur={this.checkError}
-                        onChange={this.checkError}>
+                        onChange={this.checkError}
+                        value={this.props.options.value}>
             { selectItems }
         </select>);
     }

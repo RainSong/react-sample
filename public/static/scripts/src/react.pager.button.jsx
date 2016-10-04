@@ -3,12 +3,22 @@
 var React = require('react');
 
 var PagerButton = React.createClass({
-    render:function(){
-        return(<li className = { (!this.props.className || !this.props.className) ? "paginate_button" : this.props.className } >
-                    <a href='script:;' onClick={ this.props.onPageChanged? this.props.onPageChanged.bind(null,this.props.targetPageIndex) :void(0) }>
-                        { this.props.title }
-                    </a>
-                </li>);
+    render: function () {
+        var link;
+        if (this.props.onPageChanged) {
+            link = <a href='javascript:void(0);'
+                      onClick={ this.props.onPageChanged.bind(null, this.props.targetPageIndex) }>
+                { this.props.title }
+            </a>
+        } else {
+            link = <a href='javascript:void(0);'>
+                { this.props.title }
+            </a>
+        }
+        return (
+            <li className={ (!this.props.className || !this.props.className) ? "paginate_button" : this.props.className }>
+                { link }
+            </li>);
     }
 });
 
